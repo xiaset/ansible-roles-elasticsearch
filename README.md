@@ -1,33 +1,39 @@
 Role Name
 =========
-
-A brief description of the role goes here.
+Installation and configuration of the Elasticsearch v7.x in cluster mode and single mode + xpack security & xpack ssl transport.
 
 Requirements
 ------------
+- JVM must be pre-installed
+- Ansible v2.5
+- Supported OS:
+  - RedHat 7 based
+  - Debian 9 / Ubuntu 18.04
+- Testing:
+  - Molecule 2.22
+  - Docker or Vagrant Provider
 
-Any pre-requisites that may not be covered by Ansible itself or the role should
-be mentioned here. For instance, if the role uses the EC2 module, it may be a
-good idea to mention in this section that the boto package is required.
 
 Role Variables
 --------------
 Currently only Elasticsearch version 7 can be used in this role:
-`es_version: '7.x'`
-
-`es_package_state: present`
+```yaml
+es_version: '7.x'
+es_package_state: present
+```
 
 #### Service options:
-`es_service_state: started`
-
-`es_service_enabled: true`
+```yaml
+es_service_state: started
+es_service_enabled: true
+```
 
 #### Path options:
-`es_path_data: /var/lib/elasticsearch`
-
-`es_path_logs: /var/log/elasticsearch`
-
-`es_path_config: /etc/elasticsearch`
+```yaml
+es_path_data: /var/lib/elasticsearch
+es_path_logs: /var/log/elasticsearch
+es_path_config: /etc/elasticsearch
+```
 
 #### Network options:
 The node will bind to this hostname or IP address and publish (advertise) this host to other nodes in the cluster. Accepts an IP address, hostname, a special value, or an array of any combination of these. Note that any values containing a : (e.g., an IPv6 address or containing one of the special values) must be quoted because : is a special character in YAML. 0.0.0.0 is an acceptable IP address and will bind to all network interfaces. The value 0 has the same effect as the value 0.0.0.0.
@@ -73,6 +79,7 @@ Dependencies
 
 JVM must be pre-installed
 
+
 Example Playbook
 ----------------
 
@@ -82,8 +89,8 @@ passed in as parameters) is always nice for users too:
     - hosts: servers
       roles:
          - { role: elasticsearch, x: 42 }
-`
-Transport SSL configuration:
+
+#### SSL Transport configuration:
 1. generate CA certificate:
      bin/elasticsearch-certutil ca --days 3650 --out /tmp/elastic-stack-ca.p12
 2. generate node certificates:
@@ -106,6 +113,4 @@ BSD
 
 Author Information
 ------------------
-
-An optional section for the role authors to include contact information, or a
-website (HTML is not allowed).
+Maintainer: Aset Madraimov (xiaset@gmail.com) One Technologies (amadraimov@one.kz)

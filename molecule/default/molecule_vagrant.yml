@@ -1,0 +1,54 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+  provider:
+    name: virtualbox
+lint:
+  name: yamllint
+platforms:
+  - name: es01
+    box: centos/7
+    cpus: 1
+    memory: 1560
+    instance_raw_config_args:
+      - "vm.network 'forwarded_port', guest: 9200, host: 9200"
+    interfaces:
+      - auto_config: true
+        network_name: private_network
+        type: dhcp
+    groups:
+      - elasticsearch
+  - name: es02
+    box: centos/7
+    cpus: 1
+    memory: 1560
+    instance_raw_config_args:
+      - "vm.network 'forwarded_port', guest: 9200, host: 9201"
+    interfaces:
+      - auto_config: true
+        network_name: private_network
+        type: dhcp
+    groups:
+      - elasticsearch
+  - name: es03
+    box: centos/7
+    cpus: 1
+    memory: 1560
+    instance_raw_config_args:
+      - "vm.network 'forwarded_port', guest: 9200, host: 9202"
+    interfaces:
+      - auto_config: true
+        network_name: private_network
+        type: dhcp
+    groups:
+      - elasticsearch
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+verifier:
+  name: testinfra
+  lint:
+    name: flake8

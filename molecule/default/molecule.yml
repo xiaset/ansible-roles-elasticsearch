@@ -2,48 +2,67 @@
 dependency:
   name: galaxy
 driver:
-  name: vagrant
-  provider:
-    name: virtualbox
+  name: docker
 lint:
   name: yamllint
 platforms:
   - name: es01
-    box: centos/7
-    cpus: 1
-    memory: 1560
-    instance_raw_config_args:
-      - "vm.network 'forwarded_port', guest: 9200, host: 9200"
-    interfaces:
-      - auto_config: true
-        network_name: private_network
-        type: dhcp
+    hostname: es01
+    image: centos:7
+    networks:
+      - name: es-network
+    exposed_ports:
+      - 9200
+      - 9300
+    published_ports:
+      - 0.0.0.0:9201:9200
     groups:
       - elasticsearch
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/usr/sbin/init"
+    tty: True
+    environment:
+      container: docker
   - name: es02
-    box: centos/7
-    cpus: 1
-    memory: 1560
-    instance_raw_config_args:
-      - "vm.network 'forwarded_port', guest: 9200, host: 9201"
-    interfaces:
-      - auto_config: true
-        network_name: private_network
-        type: dhcp
+    hostname: es02
+    image: centos:7
+    networks:
+      - name: es-network
+    exposed_ports:
+      - 9200
+      - 9300
+    published_ports:
+      - 0.0.0.0:9202:9200
     groups:
       - elasticsearch
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/usr/sbin/init"
+    tty: True
+    environment:
+      container: docker
   - name: es03
-    box: centos/7
-    cpus: 1
-    memory: 1560
-    instance_raw_config_args:
-      - "vm.network 'forwarded_port', guest: 9200, host: 9202"
-    interfaces:
-      - auto_config: true
-        network_name: private_network
-        type: dhcp
+    hostname: es03
+    image: centos:7
+    networks:
+      - name: es-network
+    exposed_ports:
+      - 9200
+      - 9300
+    published_ports:
+      - 0.0.0.0:9203:9200
     groups:
       - elasticsearch
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/usr/sbin/init"
+    tty: True
+    environment:
+      container: docker
 provisioner:
   name: ansible
   lint:
