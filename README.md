@@ -1,6 +1,6 @@
 ansible-roles-elasticsearch
 ===========================
-Installation and configuration of the Elasticsearch v7.x in cluster mode and single mode + xpack security & xpack ssl transport.
+Installation and configuration of the Elasticsearch v7.x in cluster or single mode + xpack security & xpack ssl transport.
 
 Requirements
 ------------
