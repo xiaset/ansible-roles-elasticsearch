@@ -1,0 +1,23 @@
+---
+#- name: check certs file exists
+#  stat:
+#    path: "{{ es_security_path_node_certificate }}"
+#  register: certsfile
+
+#- fail:
+#    msg: 'Node certificates not found, please generate node certificate files (view README)'
+#  when: certsfile.stat.exists == False
+
+- name: create certs dir
+  file:
+    path: /etc/elasticsearch/certs
+    state: directory
+    group: elasticsearch
+    mode: 0770
+
+- name: copy node certificates
+  copy:
+    src: "{{ es_security_path_node_certificate }}"
+    dest: "{{ es_path_config }}/certs/elastic-certificates.p12"
+    group: elasticsearch
+    mode: 0640
