@@ -22,20 +22,20 @@ es_version: '7.x'
 es_package_state: present
 ```
 
-Service options:
+##### Service options:
 ```yaml
 es_service_state: started
 es_service_enabled: true
 ```
 
-Path options:
+##### Path options:
 ```yaml
 es_path_data: /var/lib/elasticsearch
 es_path_logs: /var/log/elasticsearch
 es_path_config: /etc/elasticsearch
 ```
 
-Network options:
+##### Network options:
 The node will bind to this hostname or IP address and publish (advertise) this host to other nodes in the cluster. Accepts an IP address, hostname, a special value, or an array of any combination of these. Note that any values containing a : (e.g., an IPv6 address or containing one of the special values) must be quoted because : is a special character in YAML. 0.0.0.0 is an acceptable IP address and will bind to all network interfaces. The value 0 has the same effect as the value 0.0.0.0.
 ```yaml
 es_network_host: "{{ ansible_default_ipv4.address }}"
@@ -49,8 +49,8 @@ Port to bind to for incoming HTTP requests:
 es_http_port: 9200
 ```
 
-Cluster options:
-If true, a node will elect itself master and will not join a cluster with any other node. Single node cluster mode:
+##### Cluster options:
+Single node cluster mode. If true, a node will elect itself master and will not join a cluster with any other node:
 ```yaml
 es_single_node: false
 ```
@@ -67,8 +67,7 @@ Bootstrap the cluster using at least three master-eligible nodes. Default: list 
 es_cluster_initial_master_nodes: "{{ groups['elasticsearch'] | map('extract', hostvars, ['ansible_default_ipv4','address']) | list }}"
 ```
 
-Security options:
-Enable xpack security:
+##### Security options:
 ```yaml
 es_security_enable_xpack: "false"
 es_security_enable_ssl_transport: "false"
@@ -91,7 +90,7 @@ passed in as parameters) is always nice for users too:
       roles:
          - { role: elasticsearch, x: 42 }
 
-xpack security activation:
+##### xpack security activation:
 1. set 'es_security_enable_xpack' variable to 'true' (es_security_enable_xpack: true)
 2. run role to apply new security settings
 3. login to any es node and setup passwords for elasticsearch built-in users:
@@ -101,7 +100,7 @@ xpack security activation:
 4. Check xpack security status:
      curl -u elastic http://elasticsearch:9200/_xpack?pretty
 
-xpack SSL transport configuration:
+##### xpack SSL transport configuration:
 1. generate CA certificate:
      bin/elasticsearch-certutil ca --days 3650 --out /tmp/elastic-stack-ca.p12
 2. generate node certificates:
