@@ -24,3 +24,7 @@ es_cluster_initial_master_nodes: "{{ groups['elasticsearch'] | map('extract', ho
 es_security_enable_xpack: false
 es_security_enable_ssl_transport: false
 es_security_path_node_certificate: files/elastic-certificates.p12
+
+# JVM options
+es_heap_size_min: 1g
+es_heap_size_max: 1g

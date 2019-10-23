@@ -16,11 +16,23 @@
 - name: configure Elasticsearch
   template:
     src: elasticsearch.yml.j2
-    dest: /etc/elasticsearch/elasticsearch.yml
+    dest: "{{ es_path_config }}/elasticsearch.yml"
     owner: root
     group: elasticsearch
     mode: 0660
   notify: restart elasticsearch
+
+- name: configure JVM min heap size
+  lineinfile:
+    path: "{{ es_path_config }}/jvm.options"
+    regexp: '^-Xms'
+    line: -Xms{{ es_heap_size_min }}
+
+- name: configure JVM max heap size
+  lineinfile:
+    path: "{{ es_path_config }}/jvm.options"
+    regexp: '^-Xmx'
+    line: -Xmx{{ es_heap_size_max }}
 
 - name: force a restart if configuration has changed
   meta: flush_handlers

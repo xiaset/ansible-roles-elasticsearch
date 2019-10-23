@@ -74,6 +74,13 @@ es_security_enable_ssl_transport: "false"
 es_security_path_node_certificate: files/elastic-certificates.p12
 ```
 
+##### JVM options:
+```yaml
+es_heap_size_min: 1g
+es_heap_size_max: 1g
+```
+
+
 Dependencies
 ------------
 
@@ -93,18 +100,18 @@ passed in as parameters) is always nice for users too:
 ##### xpack security activation:
 1. set 'es_security_enable_xpack' variable to 'true' (es_security_enable_xpack: true)
 2. run role to apply new security settings
-3. login to any es node and setup passwords for elasticsearch built-in users:
-     bin/elasticsearch-setup-passwords auto (The passwords will be randomly generated and printed to the console)
-     or
-     bin/elasticsearch-setup-passwords interactive (You will be prompted to enter passwords as the process progresses)
-4. Check xpack security status:
+3. login to any es node and setup passwords for elasticsearch built-in users:  
+     bin/elasticsearch-setup-passwords auto (The passwords will be randomly generated and printed to the console)  
+     or  
+     bin/elasticsearch-setup-passwords interactive (You will be prompted to enter passwords as the process progresses)  
+4. Check xpack security status:  
      curl -u elastic http://elasticsearch:9200/_xpack?pretty
 
 ##### xpack SSL transport configuration:
-1. generate CA certificate:
+1. generate CA certificate:  
      bin/elasticsearch-certutil ca --days 3650 --out /tmp/elastic-stack-ca.p12
-2. generate node certificates:
-     bin/elasticsearch-certutil cert --ca /tmp/elastic-stack-ca.p12 --days 3650 --out /tmp/elastic-certificates.p12
+2. generate node certificates:  
+     bin/elasticsearch-certutil cert --ca /tmp/elastic-stack-ca.p12 --days 3650 --out /tmp/elastic-certificates.p12  
 3. copy node certificate to ansible 'files' directory (with default filename 'elastic-certificates.p12'), or configure path to certs explicitly by defining 'es_security_path_node_certificate' variable
 4. set 'es_security_enable_ssl_transport' role variable to 'true' (es_security_enable_ssl_transport: true)
 5. run role to apply new security settings

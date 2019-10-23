@@ -13,6 +13,8 @@
         es_cluster_initial_master_nodes: "{{ groups['elasticsearch'] | map('extract', hostvars, ['ansible_default_ipv4','address']) | list }}"
         #es_discovery_seed_hosts: "{{ groups['elasticsearch'] | map('extract', hostvars, ['ansible_eth1','ipv4','address']) | list }}" 
         #es_cluster_initial_master_nodes: "{{ groups['elasticsearch'] | map('extract', hostvars, ['ansible_eth1','ipv4','address']) | list }}"
-        #es_security_enable_xpack: true
-        #es_security_enable_ssl_transport: true
+        es_security_enable_xpack: true
+        es_security_enable_ssl_transport: true
+        es_heap_size_min: 512m
+        es_heap_size_max: 512m
 
